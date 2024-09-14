@@ -1,0 +1,82 @@
+{
+    "version": 1,
+    "disable_existing_loggers": false,
+    "filters": {
+        "main_filter": {
+            "()": "utility.logger.MainFilter"
+        }
+    },
+    "formatters": {
+        "detailed": {
+            "format": "[%(asctime)s] [%(levelname)-8s] %(name)s L%(lineno)d: %(message)s",
+            "datefmt": "%Y-%m-%dT%H:%M:%S%z"
+        },
+        "json": {
+            "()": "utility.logger.MyJSONFormatter",
+            "fmt_keys": {
+                "level": "levelname",
+                "message": "message",
+                "timestamp": "timestamp",
+                "logger": "name",
+                "module": "module",
+                "function": "funcName",
+                "line": "lineno",
+                "thread_name": "threadName"
+            }
+        }
+    },
+    "handlers": {
+        "stdout": {
+            "class": "logging.StreamHandler",
+            "level": "INFO",
+            "formatter": "detailed",
+            "stream": "ext://sys.stdout",
+            "filters": ["main_filter"]
+        },
+        "stderr": {
+            "class": "logging.StreamHandler",
+            "level": "WARNING",
+            "formatter": "detailed",
+            "stream": "ext://sys.stderr",
+            "filters": ["main_filter"]
+        },
+        "file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "detailed",
+            "filename": "logs/bot.log",
+            "encoding": "utf8",
+            "maxBytes": 100000000,
+            "backupCount": 50,
+            "filters": ["main_filter"]
+        },
+        "file_json": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "level": "INFO",
+            "formatter": "json",
+            "filename": "logs/bot.log.jsonl",
+            "encoding": "utf8",
+            "maxBytes": 100000000,
+            "backupCount": 50,
+            "filters": ["main_filter"]
+        },
+        "queue_handler": {
+            "class": "logging.handlers.QueueHandler",
+            "handlers": [
+                "stdout",
+                "stderr",
+                "file",
+                "file_json"
+            ],
+            "respect_handler_level": true
+        }
+    },
+    "loggers": {
+        "root": {
+            "level": "DEBUG",
+            "handlers": [
+                "queue_handler"
+            ]
+        }
+    }
+}
