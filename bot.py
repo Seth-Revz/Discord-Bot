@@ -9,7 +9,7 @@ import discord
 from discord.ext import commands
 
 import configs.config as config
-from utility.db import Database
+from utils.db import Database
 
 logger = logging.getLogger("DiscordBotName")
 

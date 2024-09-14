@@ -3,7 +3,7 @@
     "disable_existing_loggers": false,
     "filters": {
         "main_filter": {
-            "()": "utility.logger.MainFilter"
+            "()": "utils.logger.MainFilter"
         }
     },
     "formatters": {
@@ -12,7 +12,7 @@
             "datefmt": "%Y-%m-%dT%H:%M:%S%z"
         },
         "json": {
-            "()": "utility.logger.MyJSONFormatter",
+            "()": "utils.logger.MyJSONFormatter",
             "fmt_keys": {
                 "level": "levelname",
                 "message": "message",
